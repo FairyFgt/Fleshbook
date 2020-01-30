@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    margin-right: 0;
+}
+
+.RightHeader {
+    display: flex;
+    background: purple;
+    height: 10vmin;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    margin-top: 0;
+}
+
+.RightHeader a {
+    margin-left: 2vmin;
+    text-decoration: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: black;
+    margin-right: 2vmin;
+}
