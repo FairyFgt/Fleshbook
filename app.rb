@@ -1,4 +1,6 @@
 require "sqlite3"
+require_relative "models/db_manager"
+require_relative "models/pass_cryptor"
 
 class Fleshbook < Sinatra::Base
 
@@ -27,6 +29,7 @@ class Fleshbook < Sinatra::Base
         slim :index
     end
 
+
     get '/post/:id' do |id|
         @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
         @tot_GBP = @db.execute('SELECT GBP FROM posts WHERE id = ?', id)
@@ -50,13 +53,22 @@ class Fleshbook < Sinatra::Base
     end
 
     post "/register" do
-        username = params["Name"]
-        email =
-        password =
-        slim :register
+        username = params["name"]
+        email = params["email"]
+        password = params["password"]
+        confirm_password = params["confirm password"]
+
+        if password != confirm_password
+            redirect "/register"
+            return
+        end
+
+        @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))
+
     end
 
-
-   
+    get "/register/?" do
+        slim :register
+    end
 
 end

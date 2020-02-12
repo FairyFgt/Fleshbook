@@ -1,14 +1,11 @@
-require "bcrypt"
+require 'bcrypt'
 
-class Passwordhash
-
+class Pass_hash
     def self.create(password)
-        BCrypt::password.create(password)
+        hash = BCrypt::Password.create(password)        
     end
 
-    def self.validate(password, hash)
-        BCrypt::Password.new(hash) == pasword
-        
+    def validate_hash(password, hash)
+        BCrypt::Password.new(hash) == password  
     end
-
 end
