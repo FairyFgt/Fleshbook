@@ -29,7 +29,7 @@ class Seeder
 
         db.execute <<-SQL
             CREATE TABLE "users" (
-                "Email"     TEXT NOT NULL UNIQUE NOCASE,
+                "Email"     TEXT NOT NULL UNIQUE COLLATE NOCASE,
                 "ID"        INTEGER PRIMARY KEY AUTOINCREMENT,
                 "Name"      TEXT NOT NULL UNIQUE,
                 "Password"  TEXT NOT NULL,
@@ -53,8 +53,8 @@ class Seeder
                 "ID"         INTEGER PRIMARY KEY AUTOINCREMENT,
                 "GBP"        INTEGER NOT NULL DEFAULT 0,
                 "Picture_id" TEXT UNIQUE,
-                "Text"       TEXT NOT NULL NOCASE,
-                "Title"      TEXT NOT NULL NOCASE
+                "Text"       TEXT NOT NULL COLLATE NOCASE,
+                "Title"      TEXT NOT NULL COLLATE NOCASE
             
             );
         SQL
@@ -79,19 +79,19 @@ class Seeder
         ]
 
         posts = [
-            {GBP: 5, Picture_id: "asdf2678fi7" Text: "This is my new decoration" Title: "Halloween" }
+            {GBP: 5, Picture_id: "asdf2678fi7", Text: "This is my new decoration", Title: "Halloween" }
         ]
 
         users.each do |user| 
-            db.execute("INSERT INTO users (Email, Name, Password, GBP) VALUES(?,?,?,?)", user[:Email].downcase(), user[:Name], user[:Password], :[:GBP])
+            db.execute("INSERT INTO users (Email, Name, Password) VALUES(?,?,?)", user[:Email].downcase(), user[:Name], user[:Password])
         end   
 
         posts.each do |post|
-            db.execute("INSERT INTO posts (GBP, Picture_id, Text, Title) VALUES(?,?,?,?)", post[:GBP], post[:Picture_id], post[:Text], post[:Title])
+            db.execute("INSERT INTO posts (Picture_id, Text, Title) VALUES(?,?,?)", post[:Picture_id], post[:Text], post[:Title])
         end
 
         comments.each do |comment|
-            db.execute("INSERT INTO comments (GBP, Parent_id, Comment) VALUES(?,?,?)", comment[:GBP], comment[:Parent_id], comment[:Comments])
+            db.execute("INSERT INTO comments (Parent_id, Comment) VALUES(?,?)", comment[:Parent_id], comment[:Comments])
         end
     end
 end

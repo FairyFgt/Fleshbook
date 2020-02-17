@@ -53,8 +53,8 @@ class Fleshbook < Sinatra::Base
     end
 
     post "/register" do
-        username = params["name"]
         email = params["email"]
+        username = params["username"]
         password = params["password"]
         confirm_password = params["confirm password"]
 
