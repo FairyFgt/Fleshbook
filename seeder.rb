@@ -91,7 +91,7 @@ class Seeder
         end
 
         comments.each do |comment|
-            db.execute("INSERT INTO comments (Parent_id, Comment) VALUES(?,?)", comment[:Parent_id], comment[:Comments])
+            db.execute("INSERT INTO comments (Parent_id, Comment) VALUES(?,?)", comment[:Parent_id], comment[:Comment])
         end
     end
 end

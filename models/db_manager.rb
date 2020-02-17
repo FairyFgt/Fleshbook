@@ -5,7 +5,7 @@ class DBmanager
 
     def self.open_db
         if @db === nil
-            @db = Sqlite3.database.new("db/database.db")
+            @db = SQLite3::Database.new("db/database.db")
             @db.results_as_hash = true
         end
     end

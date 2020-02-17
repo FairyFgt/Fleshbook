@@ -17,7 +17,7 @@ class Fleshbook < Sinatra::Base
     post "/login/?" do
         email = params["email"]
         password = params["password"]
-        user = DBManager.by_email(email)
+        user = DBmanager.by_email(email)
 
         if @db.execute("SELECT ID FROM Users WHERE Email=? AND Password=?", email, password).length != 0
             redirect "/invalid_credentials"
