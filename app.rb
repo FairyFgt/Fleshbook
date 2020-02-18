@@ -19,9 +19,11 @@ class Fleshbook < Sinatra::Base
         password = params["password"]
         user = DBmanager.by_email(email)
 
-        if @db.execute("SELECT ID FROM Users WHERE Email=? AND Password=?", email, password).length != 0
+        if @db.execute("SELECT ID FROM Users WHERE Email=? AND Password=?", email, password).length == 0
             redirect "/invalid_credentials"
+            return
         end
+
     end
 
     get "/" do 
