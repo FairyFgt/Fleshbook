@@ -10,4 +10,5 @@ div class="center"
         label for="confirm password" confirm password
         input type="confirm password" name="confirm password" id="confirm password" placeholder="confirm password"
         button type="submit" register
-            
+-if params["status"] == "invalid_credentials"
+    script src="/js/invalid_credentials.js"

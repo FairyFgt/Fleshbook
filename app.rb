@@ -20,10 +20,9 @@ class Fleshbook < Sinatra::Base
         user = DBmanager.by_email(email)
 
         if @db.execute("SELECT ID FROM Users WHERE Email=? AND Password=?", email, password).length == 0
-            redirect "/invalid_credentials"
+            redirect "/login?status=invalid_credentials"
             return
         end
-
     end
 
     get "/" do 
@@ -64,7 +63,12 @@ class Fleshbook < Sinatra::Base
             redirect "/register"
             return
         end
-
+        
+        if @db.execute("SELECT * FROM users WHERE Email=? OR Name=?",email, username).length != 0
+            #failed
+            redirect"/register?status=invalid_credentials"
+            return
+        end
         @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))
 
     end
