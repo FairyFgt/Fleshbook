@@ -8,7 +8,11 @@ div class="center"
         label for="password" password
         input type="password" name="password" id="password" placeholder="password"
         label for="confirm password" confirm password
-        input type="confirm password" name="confirm password" id="confirm password" placeholder="confirm password"
+        input type="password" name="confirm password" id="confirm password" placeholder="confirm password"
         button type="submit" register
--if params["status"] == "invalid_credentials"
-    script src="/js/invalid_credentials.js"
+-if params["status"] == "taken_account"
+    script src="/js/taken_account.js"
+-elsif params["status"] == "password_error"
+    script src="/js/password_error.js"
+-elsif params["status"] == "insufficient_passwordlength"
+    script src="/js/insufficient_passwordlength.js"

@@ -59,14 +59,18 @@ class Fleshbook < Sinatra::Base
         password = params["password"]
         confirm_password = params["confirm password"]
 
+        if password.length < 5
+            redirect "/register?status=insufficient_passwordlength"
+            return
+        end
+
         if password != confirm_password
-            redirect "/register"
+            redirect "/register?status=password_error"
             return
         end
         
         if @db.execute("SELECT * FROM users WHERE Email=? OR Name=?",email, username).length != 0
-            #failed
-            redirect"/register?status=invalid_credentials"
+            redirect"/register?status=taken_account"
             return
         end
         @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))
