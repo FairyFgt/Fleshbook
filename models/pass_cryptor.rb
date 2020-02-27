@@ -5,7 +5,7 @@ class Pass_hash
         hash = BCrypt::Password.create(password)        
     end
 
-    def validate_hash(password, hash)
+    def self.validate(password, hash)
         BCrypt::Password.new(hash) == password  
     end
 end

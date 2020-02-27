@@ -5,6 +5,8 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     rack (2.2.2)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (2.0.8.1)
       rack
     ruby2_keywords (0.0.2)
@@ -27,6 +29,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  rack-flash3
   sinatra
   slim
   sqlite3

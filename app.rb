@@ -1,13 +1,24 @@
 require "sqlite3"
+require "rack-flash"
 require_relative "models/db_manager"
 require_relative "models/pass_cryptor"
 
 class Fleshbook < Sinatra::Base
 
     enable :sessions
+    use Rack::Flash
+    
     
     before do
         @db = SQLite3::Database.new('db/database.db')
+        @db.results_as_hash = true
+        p session[:user_id]
+        if session[:user_id]
+            query = @db.execute("SELECT * FROM Users WHERE ID=?", session[:user_id])
+            if query.length != 0
+                @current_user = query[0]
+            end
+        end
     end
 
     get "/login/?" do
@@ -18,18 +29,19 @@ class Fleshbook < Sinatra::Base
         email = params["email"]
         password = params["password"]
         user = DBmanager.by_email(email)
-
-        if @db.execute("SELECT ID FROM Users WHERE Email=? AND Password=?", email, password).length == 0
+        if user[:exists] == false || Pass_hash.validate(password, user[:data]['Password']) == false
             redirect "/login?status=invalid_credentials"
             return
         end
+
+        session[:user_id] = user[:data]['ID']
+        redirect '/'
     end
 
-    get "/" do 
+    get "/" do
         @result = @db.execute('SELECT * from posts')
         slim :index
     end
-
 
     get '/post/:id' do |id|
         @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
@@ -38,7 +50,7 @@ class Fleshbook < Sinatra::Base
     end
 
     post '/delete/:id' do |id|
-        if current_user && current_user['admin'] == 'true'
+        if @current_user && @current_user['admin'] == 'true'
             @db.execute('DELETE FROM posts WHERE id = ?', id)
         end
         redirect '/'

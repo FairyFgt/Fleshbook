@@ -4,7 +4,7 @@ class DBmanager
 
 
     def self.open_db
-        if @db === nil
+        if @db == nil
             @db = SQLite3::Database.new("db/database.db")
             @db.results_as_hash = true
         end
@@ -12,7 +12,7 @@ class DBmanager
 
     def self.by_email(email)
         open_db()
-        db_result = @db.execute("SELECT * FROM users WHERE Email = ?", email.downcase()[0])
+        db_result = @db.execute("SELECT * FROM Users WHERE Email = ?", email.downcase())[0]
         if db_result == nil
             return {exists: false}
         else
@@ -21,6 +21,7 @@ class DBmanager
     end
 
     def self.GBP(name)
+        open_db()
         @GBP = @db.execute("SELECT SUM(GBP) FROM users WHERE Name = ?", name)
         if @GBP <= 0
             @user_rank = "Normie"
