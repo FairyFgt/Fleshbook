@@ -30,7 +30,8 @@ class Fleshbook < Sinatra::Base
         password = params["password"]
         user = DBmanager.by_email(email)
         if user[:exists] == false || Pass_hash.validate(password, user[:data]['Password']) == false
-            redirect "/login?status=invalid_credentials"
+            # redirect "/login?status=invalid_credentials"
+            flash[:invalid_credentials] = "Invalid credentials."
             return
         end
 
@@ -72,17 +73,20 @@ class Fleshbook < Sinatra::Base
         confirm_password = params["confirm password"]
 
         if password.length < 5
-            redirect "/register?status=insufficient_passwordlength"
+            # redirect "/register?status=insufficient_passwordlength"
+            flash[:insufficient_passwordlength] = "Your password has insufficient characters"
             return
         end
 
         if password != confirm_password
-            redirect "/register?status=password_error"
+            # redirect "/register?status=password_error"
+            flash[:password_error] = "The passwords don't match."
             return
         end
         
         if @db.execute("SELECT * FROM users WHERE Email=? OR Name=?",email, username).length != 0
-            redirect"/register?status=taken_account"
+            # redirect"/register?status=taken_account"
+            flash[:taken_account] = "That name or email is taken."
             return
         end
         @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))
