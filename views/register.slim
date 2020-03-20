@@ -10,9 +10,11 @@ div class="center"
         label for="confirm password" confirm password
         input type="password" name="confirm password" id="confirm password" placeholder="confirm password"
         button type="submit" register
--if params["status"] == "taken_account"
-    script src="/js/taken_account.js"
--elsif params["status"] == "password_error"
-    script src="/js/password_error.js"
--elsif params["status"] == "insufficient_passwordlength"
-    script src="/js/insufficient_passwordlength.js"
+        
+        -if flash
+            -if flash[:insufficient_passwordlength]
+                p#flash = flash[:insufficient_passwordlength]
+            -if flash[:password_error]
+                p#flash = flash[:password_error]
+            -if flash[:taken_account]
+                p#flash= flash[:taken_account]

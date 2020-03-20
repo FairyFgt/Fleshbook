@@ -12,7 +12,6 @@ class Fleshbook < Sinatra::Base
     before do
         @db = SQLite3::Database.new('db/database.db')
         @db.results_as_hash = true
-        p session[:user_id]
         if session[:user_id]
             query = @db.execute("SELECT * FROM Users WHERE ID=?", session[:user_id])
             if query.length != 0
@@ -80,7 +79,7 @@ class Fleshbook < Sinatra::Base
 
         if password != confirm_password
             # redirect "/register?status=password_error"
-            flash[:password_error] = "The passwords don't match."
+            flash[:password_error] = "The passwords doesn't match."
             return
         end
         
