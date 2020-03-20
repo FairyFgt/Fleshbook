@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background: gray;
 }
 
 .RightHeader {
@@ -11,6 +12,12 @@ body {
     float: right;
     margin-top: 0;
 }
+
+header {
+    height: 15vmin;
+    background: black;
+}
+
 
 .RightHeader a {
     margin-left: 2vmin;

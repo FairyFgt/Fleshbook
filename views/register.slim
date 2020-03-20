@@ -2,9 +2,9 @@ div class="center"
     form action="/register" method="post"
         h1 class="title" Register:
         label for="email" email
-        input type="email" name="email" id="email" placeholder="email"
+        input type="email" name="email" id="email" placeholder="email" value="#{params['email'] ? params['email'] : ''}"
         label for="username" username
-        input type="username" name="username" id="username" placeholder="username"
+        input type="username" name="username" id="username" placeholder="username" value="#{params['username'] ? params['username'] : ''}"
         label for="password" password
         input type="password" name="password" id="password" placeholder="password"
         label for="confirm password" confirm password

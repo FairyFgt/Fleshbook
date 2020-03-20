@@ -24,6 +24,12 @@ class Fleshbook < Sinatra::Base
         slim :login
     end
 
+    get "/logout/?" do
+        session.clear()
+        redirect "/"
+    end
+    
+
     post "/login/?" do
         email = params["email"]
         password = params["password"]
@@ -31,6 +37,7 @@ class Fleshbook < Sinatra::Base
         if user[:exists] == false || Pass_hash.validate(password, user[:data]['Password']) == false
             # redirect "/login?status=invalid_credentials"
             flash[:invalid_credentials] = "Invalid credentials."
+            redirect "/login?email=#{email}"
             return
         end
 
@@ -59,6 +66,7 @@ class Fleshbook < Sinatra::Base
 
     def loggedin?()
         if session[:user_id]
+            redirect "/"
             else
             redirect "/"
             return
@@ -74,18 +82,21 @@ class Fleshbook < Sinatra::Base
         if password.length < 5
             # redirect "/register?status=insufficient_passwordlength"
             flash[:insufficient_passwordlength] = "Your password has insufficient characters"
+            redirect "/register?email=#{email}&username=#{username}"
             return
         end
 
         if password != confirm_password
             # redirect "/register?status=password_error"
             flash[:password_error] = "The passwords doesn't match."
+            redirect "/register?email=#{email}&username=#{username}"
             return
         end
         
         if @db.execute("SELECT * FROM users WHERE Email=? OR Name=?",email, username).length != 0
             # redirect"/register?status=taken_account"
-            flash[:taken_account] = "That name or email is taken."
+            flash[:taken_account] = "That username or email is taken."
+            redirect "/register?"
             return
         end
         @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))

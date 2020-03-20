@@ -15,10 +15,8 @@ html lang="en"
                 -if @current_user
                     a href="/u/#{@current_user['Name']}" Account
                     a href="/post/new/?" Post
+                    a href="/logout/?" Log out
                 -else
                     a href="/login/?" Login
                     a href="/register/?" Register
         ==yield
-
-
-        script src="/js/error.js?#{Time.now.to_i}"
