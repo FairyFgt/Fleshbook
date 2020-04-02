@@ -50,6 +50,12 @@ class Fleshbook < Sinatra::Base
         slim :index
     end
 
+    get "/post/new/?" do
+        
+        slim :post_new
+    end
+
+
     get '/post/:id' do |id|
         @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
         @tot_GBP = @db.execute('SELECT GBP FROM posts WHERE id = ?', id)
