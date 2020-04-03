@@ -40,3 +40,24 @@ header {
     width: 100vmin;
     margin: 0;
 }
+
+#post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title_new_input {
+    width: 50vmin;
+}
+
+.text_new_input {
+    width: 70vmin;
+    height: 20vmin;
+    margin:0;
+}
+
+.post_new_button {
+    width: 25vmin;
+}

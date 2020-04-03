@@ -1,2 +1,9 @@
-div class="new_postframe"
-    textarea# class="new_post"
+form#post action="/post_new" method="post"
+ 
+    label Title:
+    input class="title_new_input" type="text" name="title" maxlength="20"
+
+    label Text:
+    textarea# class="text_new_input" max="2"
+
+    button class="post_new_button" type="submit" Post
