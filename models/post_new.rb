@@ -7,7 +7,7 @@ class Post_content
     end
 
     def get_content(title, content)
-        
+        @db.execute('INSERT INTO posts (title, content) VALUES (?,?)', title, content)
     end
     
 end
