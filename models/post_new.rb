@@ -6,8 +6,8 @@ class Post_content
         @db = db    
     end
 
-    def get_content(title, content)
-        @db.execute('INSERT INTO posts (title, content) VALUES (?,?)', title, content)
+    def add_content(title, text, picture_id)
+        @db.execute('INSERT INTO posts (title, text, picture_id) VALUES (?,?,?)', title, text, picture_id)
     end
     
 end
