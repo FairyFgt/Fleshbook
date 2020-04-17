@@ -50,7 +50,7 @@ class Fleshbook < Sinatra::Base
 
     get "/" do
         @result = @db.execute('SELECT * from posts')
-        slim :index
+        slim :collective
     end
 
     get "/post/new/?" do
@@ -66,7 +66,7 @@ class Fleshbook < Sinatra::Base
         picture_id = params["picture_id"]
         p picture_id
         content = Post_content.new(@db)
-        content.add_content(title, content,picture_id)
+        content.add_content(title, text,picture_id)
         redirect '/'
     
     end

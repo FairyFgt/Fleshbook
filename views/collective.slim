@@ -1,0 +1,7 @@
+ section id="posters"
+        - @result.each do |post|
+            a class="post" href="/post/#{post['id']}"
+                form action="/delete/#{post['id']}" method="post"
+                    h1 #{post['title']}
+                    button type="submit" Delete
+                    h2 Upvotes: #{post["GBP"]}

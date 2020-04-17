@@ -61,3 +61,10 @@ header {
 .post_new_button {
     width: 25vmin;
 }
+
+section#posters {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+}
