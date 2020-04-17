@@ -2,6 +2,9 @@ require "sqlite3"
 require "rack-flash"
 require_relative "models/db_manager"
 require_relative "models/pass_cryptor"
+require_relative "models/post_new"
+require_relative "models/post"
+
 
 class Fleshbook < Sinatra::Base
 
@@ -51,8 +54,21 @@ class Fleshbook < Sinatra::Base
     end
 
     get "/post/new/?" do
-        
-        slim :post_new
+        if @current_user
+            slim :post_new
+        end
+    end
+
+    
+    post "/post/new" do
+        title = params["title"]
+        text = params["text"]
+        picture_id = params["picture_id"]
+        p picture_id
+        content = Post_content.new(@db)
+        content.add_content(title, content,picture_id)
+        redirect '/'
+    
     end
 
 
