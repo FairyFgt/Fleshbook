@@ -48,6 +48,19 @@ header {
     align-items: center;
 }
 
+.post{
+    margin-left: 4vmin;
+}
+
+.post_frame{
+    background: white;
+    width: 50vmin;
+    min-height: 5vmin;
+    border-radius: 2vmin;
+    align-items: center;
+
+}
+
 .title_new_input {
     width: 50vmin;
 }
