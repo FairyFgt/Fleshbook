@@ -54,7 +54,8 @@ class Seeder
                 "GBP"        INTEGER NOT NULL DEFAULT 0,
                 "Picture_id" TEXT UNIQUE,
                 "Text"       TEXT NOT NULL COLLATE NOCASE,
-                "Title"      TEXT NOT NULL COLLATE NOCASE
+                "Title"      TEXT NOT NULL COLLATE NOCASE,
+                "User_id"    INTEGER NOT NULL 
             
             );
         SQL
@@ -79,7 +80,7 @@ class Seeder
         ]
 
         posts = [
-            {GBP: 5, Picture_id: "asdf2678fi7", Text: "This is my new decoration", Title: "Halloween" }
+            {GBP: 5, Picture_id: "asdf2678fi7", Text: "This is my new decoration", Title: "Halloween", user_id: 1 }
         ]
 
         users.each do |user| 
@@ -87,7 +88,7 @@ class Seeder
         end   
 
         posts.each do |post|
-            db.execute("INSERT INTO posts (Picture_id, Text, Title) VALUES(?,?,?)", post[:Picture_id], post[:Text], post[:Title])
+            db.execute("INSERT INTO posts (Picture_id, Text, Title, user_id) VALUES(?,?,?,?)", post[:Picture_id], post[:Text], post[:Title], post[:user_id])
         end
 
         comments.each do |comment|

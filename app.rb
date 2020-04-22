@@ -64,23 +64,26 @@ class Fleshbook < Sinatra::Base
         title = params["title"]
         text = params["text"]
         picture_id = params["picture_id"]
-        p picture_id
         content = Post_content.new(@db)
-        content.add_content(title, text,picture_id)
+        content.add_content(title, text,picture_id, @current_user["ID"])
         redirect '/'
     
     end
 
 
     get '/post/:id' do |id|
-        @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
+       # @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
+        @current_user = session[:user_id]
+        p = Post.new(@db)
+        @current_post = p.get_content(id)
         @tot_GBP = @db.execute('SELECT GBP FROM posts WHERE id = ?', id)
         slim :post
     end
 
-    post '/delete/:id' do |id|
-        if @current_user && @current_user['admin'] == 'true'
-            @db.execute('DELETE FROM posts WHERE id = ?', id)
+    post "/delete/" do
+       post = @db.execute('SELECT user_id FROM posts WHERE id = ?', params["id"])[0]
+        if @current_user['ID'] == post['User_id'] || @current_user['admin'] == "true"
+            @db.execute('DELETE FROM posts WHERE id = ?', params["id"])
         end
         redirect '/'
         return

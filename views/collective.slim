@@ -1,9 +1,9 @@
  section id="posters"
         - @result.each do |posts|
-            a class="post" href="/post/#{posts['id']}"
-                form action="/delete/#{posts['id']}" method="post"
+            a class="post" href="/post/#{posts['ID']}"
+                form action="/delete/" method="post"
                     h1 #{posts["Title"]}
                     div class="post_frame"
                         p #{posts["Text"]}
-                    button type="submit" Delete
+                    button type="submit" name="id" value="#{posts['ID']}" Delete
                     h2 Good Boy Points: #{posts["GBP"]}

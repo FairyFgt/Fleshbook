@@ -58,6 +58,7 @@ header {
     min-height: 5vmin;
     border-radius: 2vmin;
     align-items: center;
+    word-wrap: break-word;
 
 }
 
