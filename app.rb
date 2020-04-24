@@ -19,6 +19,7 @@ class Fleshbook < Sinatra::Base
             query = @db.execute("SELECT * FROM Users WHERE ID=?", session[:user_id])
             if query.length != 0
                 @current_user = query[0]
+                p @current_user
             end
         end
     end
@@ -73,7 +74,6 @@ class Fleshbook < Sinatra::Base
 
     get '/post/:id' do |id|
        # @current_post = @db.execute('SELECT * FROM posts WHERE id = ?', id)
-        @current_user = session[:user_id]
         p = Post.new(@db)
         @current_post = p.get_content(id)
         @tot_GBP = @db.execute('SELECT GBP FROM posts WHERE id = ?', id)

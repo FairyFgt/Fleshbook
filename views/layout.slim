@@ -13,6 +13,7 @@ html lang="en"
 
             section class="RightHeader"
                 -if @current_user
+                
                     a href="/u/#{@current_user['Name']}" Account
                     p= @current_user
                     a href="/post/new/?" Post
