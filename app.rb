@@ -4,6 +4,9 @@ require_relative "models/db_manager"
 require_relative "models/pass_cryptor"
 require_relative "models/post_new"
 require_relative "models/post"
+require_relative "models/register"
+require_relative "models/before_do"
+require_relative "models/gbp"
 
 
 class Fleshbook < Sinatra::Base
@@ -16,10 +19,10 @@ class Fleshbook < Sinatra::Base
         @db = SQLite3::Database.new('db/database.db')
         @db.results_as_hash = true
         if session[:user_id]
-            query = @db.execute("SELECT * FROM Users WHERE ID=?", session[:user_id])
+            query = Before.new(@db)
+            query = query.before_do(session[:user_id])
             if query.length != 0
                 @current_user = query[0]
-                p @current_user
             end
         end
     end
@@ -80,9 +83,23 @@ class Fleshbook < Sinatra::Base
         slim :post
     end
 
+    post '/upvote/:id' do |id|
+        if @current_user
+            gbp = GBP.new(@db)
+            if gbp.get_gbp(id, @current_user["id"]).length == 1
+                redirect '/'
+            else
+                gbp.insert_gbp(id, @current_user["id"])
+                redirect '/'
+    
+            end
+       
+        end
+    end
+
     post "/delete/" do
        post = @db.execute('SELECT user_id FROM posts WHERE id = ?', params["id"])[0]
-        if @current_user['ID'] == post['User_id'] || @current_user['admin'] == "true"
+        if @current_user && (post['User_id'] || @current_user['admin'] == "true")
             @db.execute('DELETE FROM posts WHERE id = ?', params["id"])
         end
         redirect '/'
@@ -124,7 +141,9 @@ class Fleshbook < Sinatra::Base
             redirect "/register?"
             return
         end
-        @db.execute("INSERT INTO users (Email,Name,Password) VALUES(?,?,?)",email,username,Pass_hash.create(password))
+        r = Register.new(@db)
+        r.register_credentials(email, username, password)
+        redirect "/login"
 
     end
 
