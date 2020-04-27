@@ -53,7 +53,8 @@ class Fleshbook < Sinatra::Base
     end
 
     get "/" do
-        @result = @db.execute('SELECT * from posts')
+        p = Post.new(@db)
+        @result = p.get_all()
         slim :collective
     end
 
@@ -86,10 +87,10 @@ class Fleshbook < Sinatra::Base
     post '/upvote/:id' do |id|
         if @current_user
             gbp = GBP.new(@db)           
-            gbp.insert_gbp(id, @current_user["id"])
-          
-       
+            gbp.insert_gbp(id, @current_user["ID"])
+            
         end
+        redirect "/"
     end
 
     post "/delete/" do
