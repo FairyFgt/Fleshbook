@@ -85,21 +85,16 @@ class Fleshbook < Sinatra::Base
 
     post '/upvote/:id' do |id|
         if @current_user
-            gbp = GBP.new(@db)
-            if gbp.get_gbp(id, @current_user["id"]).length == 1
-                redirect '/'
-            else
-                gbp.insert_gbp(id, @current_user["id"])
-                redirect '/'
-    
-            end
+            gbp = GBP.new(@db)           
+            gbp.insert_gbp(id, @current_user["id"])
+          
        
         end
     end
 
     post "/delete/" do
        post = @db.execute('SELECT user_id FROM posts WHERE id = ?', params["id"])[0]
-        if @current_user && (post['User_id'] || @current_user['admin'] == "true")
+        if @current_user && (post['User_id'] == @current_user['ID'] || @current_user['admin'] == "true")
             @db.execute('DELETE FROM posts WHERE id = ?', params["id"])
         end
         redirect '/'
