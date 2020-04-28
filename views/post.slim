@@ -1,5 +1,5 @@
 section id="unique"
-    form action="/upvote/#{@current_post}" method="post"
+    form action="/upvote/#{@current_post['ID']}" method="post"
         h2 Upvotes: #{@current_post['GBP']}
         h1 Title: #{@current_post['Title']}
         h2 Bröd text: #{@current_post['Text']}
