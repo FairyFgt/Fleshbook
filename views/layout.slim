@@ -9,13 +9,13 @@ html lang="en"
     body
         header
             section class="LeftHeader"
-                a class="home" href="/" Fleshbook
+                a href="/"
+                    img src="/img/fleshbook_logo.png" class="home" href="/"
 
             section class="RightHeader"
                 -if @current_user
                 
                     a href="/u/#{@current_user['Name']}" Account
-                    p= @current_user
                     a href="/post/new/?" Post
                     a href="/logout/?" Log out
                 -else

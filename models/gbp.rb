@@ -13,7 +13,6 @@ class GBP
             @db.execute('INSERT INTO post_gbp (User_id, Post_id) VALUES (?, ?)',user_id, id)
             @db.execute('UPDATE posts SET GBP = GBP + 1 WHERE ID = ?', id)
       end
-        #@db.execute('INSERT INTO users (id, user_id) VALUES (?, ?)', id , user_id)
     end
 
 end

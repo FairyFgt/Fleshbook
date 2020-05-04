@@ -62,6 +62,10 @@ header {
 
 }
 
+img {
+    width: 15vmin;
+}
+
 .title_new_input {
     width: 50vmin;
 }
@@ -81,4 +85,8 @@ section#posters {
     flex-direction: column;
     align-items: flex-start;
     
+}
+
+.leftheader {
+    width: 20vmin;
 }

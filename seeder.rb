@@ -22,6 +22,7 @@ class Seeder
         db.execute('DROP TABLE IF EXISTS users')
         db.execute('DROP TABLE IF EXISTS posts')
         db.execute('DROP TABLE IF EXISTS comments')
+        db.execute('DROP TABLE IF EXISTS post_gbp')
 
     end
 
@@ -60,6 +61,13 @@ class Seeder
             );
         SQL
 
+        db.execute <<-SQL
+            CREATE TABLE "post_gbp" (
+                "ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+                "User_id"	INTEGER NOT NULL,
+                "Post_id"	INTEGER NOT NULL
+            );
+        SQL
 
     end
 
